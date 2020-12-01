@@ -39,10 +39,10 @@ fn main() {
     println!("{} * {} = {}", num1, num2, num1*num2);
 
     // part2
-    let (num1, num2) = part2(&num_vec);
-    println!("{} + {} = {}", num1, num2, num1+num2);
+    let (num1, num2, num3) = part2(&num_vec);
+    println!("{} + {} + {} = {}", num1, num2, num3, num1+num2+num3);
     // now I need to multiply the two
-    println!("{} * {} = {}", num1, num2, num1*num2);
+    println!("{} * {} * {} = {}", num1, num2, num3, num1*num2*num3);
 }
 
 // The output is wrapped in a Result to allow matching on errors
@@ -59,13 +59,12 @@ where P: AsRef<Path>, {
 fn part1(vector: &Vec<u32>) -> (u32, u32) {
     let mut num1: u32= 0;
     let mut num2: u32 = 1;
-    let mut sum: u32 = 0;
     // length of the vector
     let len: usize = vector.len();
 
     'out : for s1 in 0..len {
         for s2 in s1..len {
-            sum = vector[s1] + vector[s2];
+            let sum = vector[s1] + vector[s2];
             if sum == 2020 {
                 num1 = vector[s1];
                 num2 = vector[s2];
@@ -79,5 +78,25 @@ fn part1(vector: &Vec<u32>) -> (u32, u32) {
 
 // solution to part 2
 fn part2(vector: &Vec<u32>) -> (u32, u32, u32) {
-    (0,0,0)
+    let mut num1: u32= 0;
+    let mut num2: u32 = 1;
+    let mut num3: u32 = 2;
+    // length of the vector
+    let len: usize = vector.len();
+
+    'out : for s1 in 0..len {
+        for s2 in s1..len {
+            for s3 in s2..len {
+                let sum = vector[s1] + vector[s2] + vector[s3];
+                if sum == 2020 {
+                    num1 = vector[s1];
+                    num2 = vector[s2];
+                    num3 = vector[s3];
+                    break 'out;
+                }
+            }
+        }
+    }
+
+    (num1, num2, num3)
 }
