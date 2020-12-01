@@ -32,26 +32,27 @@ fn main() {
         }
     }
 
-    let mut sum1: usize = 0;
-    let mut sum2: usize = 1;
-    let mut result: u32 = 0;
+    let mut num1: u32= 0;
+    let mut num2: u32 = 1;
+    let mut sum: u32 = 0;
+    // length of the vector
     let len: usize = num_vec.len();
 
-    // vec[0..1] + vec[1..2]
-    // vec[0..1] + vec[2..3]
-
-    while result != 2020 && sum1 < len {
-        for iter in &num_vec {
-            result = num_vec[sum1..sum1+1][0] + iter;
-            sum2 = *iter as usize;
+    'out : for s1 in 0..len {
+        for s2 in s1..len {
+            sum = num_vec[s1] + num_vec[s2];
+            if sum == 2020 {
+                num1 = num_vec[s1];
+                num2 = num_vec[s2];
+                break 'out;
+            }
         }
-
-        sum1 += 1;
     }
 
-    //println!("{} and {} equal {}", num_vec[sum1..sum1+1][0], num_vec[sum2..sum2+1][0], result);
-
-    //println!("{:#?}", num_vec);
+    println!("{} + {} = {}", num1, num2, sum);
+    // now I need to multiply the two
+    let result: u32 = num1 * num2;
+    println!("{} * {} = {}", num1, num2, result);
 }
 
 // The output is wrapped in a Result to allow matching on errors
