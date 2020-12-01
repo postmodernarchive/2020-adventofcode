@@ -32,27 +32,17 @@ fn main() {
         }
     }
 
-    let mut num1: u32= 0;
-    let mut num2: u32 = 1;
-    let mut sum: u32 = 0;
-    // length of the vector
-    let len: usize = num_vec.len();
-
-    'out : for s1 in 0..len {
-        for s2 in s1..len {
-            sum = num_vec[s1] + num_vec[s2];
-            if sum == 2020 {
-                num1 = num_vec[s1];
-                num2 = num_vec[s2];
-                break 'out;
-            }
-        }
-    }
-
-    println!("{} + {} = {}", num1, num2, sum);
+    // part1
+    let (num1, num2) = part1(&num_vec);
+    println!("{} + {} = {}", num1, num2, num1+num2);
     // now I need to multiply the two
-    let result: u32 = num1 * num2;
-    println!("{} * {} = {}", num1, num2, result);
+    println!("{} * {} = {}", num1, num2, num1*num2);
+
+    // part2
+    let (num1, num2) = part2(&num_vec);
+    println!("{} + {} = {}", num1, num2, num1+num2);
+    // now I need to multiply the two
+    println!("{} * {} = {}", num1, num2, num1*num2);
 }
 
 // The output is wrapped in a Result to allow matching on errors
@@ -64,3 +54,30 @@ where P: AsRef<Path>, {
 }
 // NOTE: straight up stolen from
 // https://doc.rust-lang.org/stable/rust-by-example/std_misc/file/read_lines.html
+
+// solution to part 1
+fn part1(vector: &Vec<u32>) -> (u32, u32) {
+    let mut num1: u32= 0;
+    let mut num2: u32 = 1;
+    let mut sum: u32 = 0;
+    // length of the vector
+    let len: usize = vector.len();
+
+    'out : for s1 in 0..len {
+        for s2 in s1..len {
+            sum = vector[s1] + vector[s2];
+            if sum == 2020 {
+                num1 = vector[s1];
+                num2 = vector[s2];
+                break 'out;
+            }
+        }
+    }
+
+    (num1, num2)
+}
+
+// solution to part 2
+fn part2(vector: &Vec<u32>) -> (u32, u32, u32) {
+    (0,0,0)
+}
