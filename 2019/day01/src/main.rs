@@ -5,34 +5,32 @@ use std::path::Path;
 fn main() {
     let filename: String = "input.txt".to_string();
 
-    // fuel counter
-    let mut module_fuel: u32 = 0;
+    // the lines as u32 vector
+    let mut modules: Vec<u32> = vec![];
 
     // File hosts must exist in current path before this produces output
     if let Ok(lines) = read_lines(filename) {
         // Consumes the iterator, returns an (Optional) String
         for line in lines {
             if let Ok(number) = line {
-                module_fuel += calc_fuel(number.parse::<u32>().unwrap());
+                modules.push(number.parse::<u32>().unwrap());
             }
         }
     }
 
-    println!("amount of fuel needed for modules is: {}", module_fuel);
+    // fuel counter
+    let mut module_fuel: u32 = 0;
+    let mut extra_fuel: u32 = 0;
 
-    // calculate the remaining fule's fuel
-    // (the mass of the fuel also requires more fuel)
-    //let mut total_fuel = module_fuel;
-    let mut total_fuel = module_fuel;
-    let mut new_fuel: u32 = calc_fuel(total_fuel);
-
-    while new_fuel >= 1 {
-        total_fuel += new_fuel;
-        new_fuel = calc_fuel(new_fuel);
-        println!("{}", new_fuel);
+    for module in modules {
+        let new_fuel = calc_fuel(module);
+        module_fuel += new_fuel;
+        extra_fuel += calc_fuel(new_fuel);
     }
 
-    println!("total amount of fuel needed for modules and fuel's fuel is: {}", total_fuel);
+    println!("amount of fuel needed for modules is: {}", module_fuel);
+
+    println!("total amount of fuel needed for modules and fuel's fuel is: {}", extra_fuel);
 }
 
 // The output is wrapped in a Result to allow matching on errors
