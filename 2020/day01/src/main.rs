@@ -1,3 +1,5 @@
+extern crate advent_lib;
+
 // basic idea is:
 // 1. read file -> each line into an array/vector as u32
 // 2.1. start from zero, add a[0] + a[1], a[0] + a[2]
@@ -8,28 +10,14 @@
 //  3.1 yes -> save both summands
 //  3.2 no -> continue
 
-use std::fs::File;
-use std::io::{self, BufRead};
-use std::path::Path;
-
 fn main() {
-    let mut filename: String = "input.txt".to_string();
-
-    if std::env::args().nth(1) != None {
-        filename = std::env::args().nth(1).unwrap();
-    }
+    let lines: Vec<String> = advent_lib::file_to_vec("input.txt".to_string());
 
     // vector for numbers
     let mut num_vec: Vec<u32> = vec![];
-
-    // File hosts must exist in current path before this produces output
-    if let Ok(lines) = read_lines(filename) {
-        // Consumes the iterator, returns an (Optional) String
-        for line in lines {
-            if let Ok(number) = line {
-                num_vec.push(number.parse::<u32>().unwrap());
-            }
-        }
+    
+    for line in lines {
+        num_vec.push(line.parse::<u32>().unwrap());
     }
 
     // part1
@@ -44,16 +32,6 @@ fn main() {
     // now I need to multiply the two
     println!("{} * {} * {} = {}", num1, num2, num3, num1*num2*num3);
 }
-
-// The output is wrapped in a Result to allow matching on errors
-// Returns an Iterator to the Reader of the lines of the file.
-fn read_lines<P>(filename: P) -> io::Result<io::Lines<io::BufReader<File>>>
-where P: AsRef<Path>, {
-    let file = File::open(filename)?;
-    Ok(io::BufReader::new(file).lines())
-}
-// NOTE: straight up stolen from
-// https://doc.rust-lang.org/stable/rust-by-example/std_misc/file/read_lines.html
 
 // solution to part 1
 fn part1(vector: &Vec<u32>) -> (u32, u32) {
