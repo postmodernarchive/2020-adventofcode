@@ -12,12 +12,26 @@ fn main() {
     for line in lines {
         //println!("criteria {:#?}", get_criteria(line));
         // using to_string() becuase I do not want to borrow or whatever the term for this is.
-        if is_password_valid(get_password(line.to_string()), get_criteria(line.to_string())) {
+        if is_password_valid1(get_password(line.to_string()), get_criteria(line.to_string())) {
             valid_counter += 1;
         }
     }
 
-    println!("amount of passwords that are valid is: {}", valid_counter);
+    println!("amount of passwords that are valid in part one is: {}", valid_counter);
+
+    // just ugly second initialisation of lines
+    let lines: Vec<String> = advent_lib::file_to_vec("input.txt".to_string());
+    let mut valid_counter: u32 = 0;
+
+    for line in lines {
+        //println!("criteria {:#?}", get_criteria(line));
+        // using to_string() becuase I do not want to borrow or whatever the term for this is.
+        if is_password_valid2(get_password(line.to_string()), get_criteria(line.to_string())) {
+            valid_counter += 1;
+        }
+    }
+
+    println!("amount of passwords that are valid in part one is: {}", valid_counter);
 }
 
 struct Criteria {
@@ -45,7 +59,8 @@ fn get_password(line: String) -> String {
     line.split(':').collect::<Vec<&str>>()[1].to_string()
 }
 
-fn is_password_valid(password: String, criteria: Criteria) -> bool {
+// part 1
+fn is_password_valid1(password: String, criteria: Criteria) -> bool {
     let pass_vec: Vec<char> = password.chars().collect::<Vec<char>>();
 
     let mut c_counter: u8 = 0;
@@ -59,6 +74,30 @@ fn is_password_valid(password: String, criteria: Criteria) -> bool {
     if c_counter >= criteria.min && c_counter <= criteria.max {
         return true;
     } else {
+        return false;
+    }
+}
+
+// part 2
+fn is_password_valid2(password: String, criteria: Criteria) -> bool {
+    let pass_vec: Vec<char> = password.chars().collect::<Vec<char>>();
+
+    let min: usize = criteria.min as usize;
+    let max: usize = criteria.max as usize;
+
+    if pass_vec[min] == criteria.letter &&
+    pass_vec[max] == criteria.letter {
+
+            return false;
+    } else if pass_vec[min] != criteria.letter &&
+    pass_vec[max] != criteria.letter {
+        return false;
+    } else if pass_vec[min] == criteria.letter ||
+    pass_vec[max] == criteria.letter {
+        return true;
+    } else {
+        // not even sure, if it is ever able to reach this case
+        println!("the \"unreachable\" case has been reached !!");
         return false;
     }
 }
