@@ -33,4 +33,9 @@ mod tests {
     fn it_works() {
         assert_eq!(2 + 2, 4);
     }
+
+    #[test]
+    fn newline_is_empty() {
+        assert_eq!(String::new().is_empty(), "\n".is_empty());
+    }
 }
