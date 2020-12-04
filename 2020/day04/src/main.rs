@@ -18,7 +18,7 @@ extern crate advent_lib;
 
 
 fn main() {
-    let lines: Vec<String> = advent_lib::file_to_vec("input-test.txt".to_string());
+    let lines: Vec<String> = advent_lib::file_to_vec("input.txt".to_string());
 
     //separate lines into vector, separated by empty newlines ("\n")
     let mut passport_str: Vec<String> = vec![];
@@ -29,8 +29,11 @@ fn main() {
         if line.is_empty() || *line == "\n".to_string() {
             passport_str.push(passport.to_owned());
             passport = String::new();
+        //} else if line.chars().last().unwrap() == '\n' {
+            //passport += &" ".to_string();
         } else {
             passport += &line;
+            passport += " ";
         }
 
         if line == lines.last().expect("there arent any lines or something i think") {
@@ -38,7 +41,7 @@ fn main() {
         }
     }
 
-    println!("{:#?}", passport_str);
+    //println!("{:#?}", passport_str);
 
     let mut valid_counter: u32 = 0;
 
@@ -82,7 +85,7 @@ impl Passport {
                 "ecl" => passport.ecl = Some(key_value[1].to_string()),
                 "pid" => passport.pid = Some(key_value[1].to_string()),
                 "cid" => passport.cid = Some(key_value[1].to_string()),
-                &_ => println!("key is empty") // do noting
+                &_ => () // do noting
             }
         }
 
@@ -93,29 +96,29 @@ impl Passport {
     pub fn is_valid(self) -> bool {
         let mut is_valid: bool = true;
 
-        if !self.byr.is_some() {
+        if self.byr.is_none() {
             is_valid = false;
         }
-        if !self.iyr.is_some() {
+        if self.iyr.is_none() {
             is_valid = false;
         }
-        if !self.eyr.is_some() {
+        if self.eyr.is_none() {
             is_valid = false;
         }
-        if !self.hgt.is_some() {
+        if self.hgt.is_none() {
             is_valid = false;
         }
-        if !self.hcl.is_some() {
+        if self.hcl.is_none() {
             is_valid = false;
         }
-        if !self.ecl.is_some() {
+        if self.ecl.is_none() {
             is_valid = false;
         }
-        if !self.pid.is_some() {
+        if self.pid.is_none() {
             is_valid = false;
         }
         /*
-        if self.cid.is_some() {
+        if self.cid.is_none() {
             // no need to check, becuase cid is optional
         }
         */
