@@ -1,4 +1,6 @@
 from typing import List
+
+
 def count_increases(arr: List[int]) -> int:
     increases = 0
     previous_value = arr[0]
