@@ -1,3 +1,6 @@
+from utils import get_lines
+
+
 vertical = 0
 horizontal = 0
 aim = 0
@@ -36,16 +39,15 @@ def main():
         'forward': forward,
     }
 
-    with open('input/02.txt', 'r', encoding='UTF-8') as input:
-        i = 0
-        for l in input.readlines():
-            operation, value = l.split(' ')
-            operations[operation](int(value))
-            print(f'o {operation} val {value}\n\tv {vertical}, h {horizontal}')
+    i = 0
+    for l in get_lines('input/02.txt'):
+        operation, value = l.split(' ')
+        operations[operation](int(value))
+        print(f'o {operation} val {value}\n\tv {vertical}, h {horizontal}')
 
-            if i >= 10:
-                continue
-            i += 1
+        if i >= 10:
+            continue
+        i += 1
 
     print(f'h {horizontal} * v {vertical} = {horizontal * vertical}')
 

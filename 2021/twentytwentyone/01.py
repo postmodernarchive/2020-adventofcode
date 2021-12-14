@@ -1,5 +1,7 @@
 from typing import List
 
+from utils import get_lines
+
 
 def count_increases(arr: List[int]) -> int:
     increases = 0
@@ -17,9 +19,8 @@ def count_increases(arr: List[int]) -> int:
 if __name__ == '__main__':
     depths = []
 
-    with open('input/01.txt', 'r', encoding='UTF-8') as input:
-        for l in input.readlines():
-            depths.append(int(l))
+    for l in get_lines('input/01.txt'):
+        depths.append(int(l))
 
     # part one
     increases = count_increases(depths)
