@@ -36,7 +36,7 @@ def main():
         'forward': forward,
     }
 
-    with open('input.txt', 'r', encoding='UTF-8') as input:
+    with open('input/02.txt', 'r', encoding='UTF-8') as input:
         i = 0
         for l in input.readlines():
             operation, value = l.split(' ')

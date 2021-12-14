@@ -17,7 +17,7 @@ def count_increases(arr: List[int]) -> int:
 if __name__ == '__main__':
     depths = []
 
-    with open('input.txt', 'r', encoding='UTF-8') as input:
+    with open('input/01.txt', 'r', encoding='UTF-8') as input:
         for l in input.readlines():
             depths.append(int(l))
 
